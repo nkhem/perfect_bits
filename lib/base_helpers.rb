@@ -165,8 +165,6 @@ def prev_perfect_bit_expensive(base_ten_num, ones_count = nil, is_initial_recurs
 end
 
 def closest_prev_perfect_bit_ones_count(base_two_num)
-  # debugger if base_two_num == '1000000110'
-
   raise 'invalid input' if base_tenify(base_two_num) < 2
   return 1 if base_tenify(base_two_num) < 15
   if closest_prev_perfect_bit_has_same_ones_count(base_two_num)
@@ -174,7 +172,6 @@ def closest_prev_perfect_bit_ones_count(base_two_num)
   elsif base_two_num.count('1') == 1
     return prev_perfect_square(base_two_num.length - 1)
   else
-    # debugger if base_two_num = binarify(1099511627776)
     return prev_perfect_square(base_two_num.count('1'))
   end
 end
@@ -310,8 +307,7 @@ def prev_permutations_count(base_ten_or_two_num, ones_count_goal)
   base_two_num = binarify(base_ten_num)
   raise 'only accepts perfect bits' unless is_perfect_bit?(base_ten_num)
 
-  # set bits arr to relevant base_ten_num
-  # debugger if base_ten_or_two_num == 16643 && ones_count_goal == 9
+  # set bits arr to relevant base_ten_num dynamic chunk
   count = 0
   if base_two_num.count('1') == ones_count_goal
     dynamic_chunk = dynamic_chunk(base_ten_num)
@@ -329,7 +325,6 @@ def prev_permutations_count(base_ten_or_two_num, ones_count_goal)
   return 1 if ones_count_goal && ones_count_goal == 1 && !is_binary_base?(base_ten_num) #'11111', and ones_count_goal == 1
   return 0 if base_two_num.count('1') < 2 #'100000000'
   return 0 if !base_two_num.index('0') && !ones_count_goal #'111111111'
-  # debugger if base_two_num.count('1') != ones_count_goal
 
   # count previous permutations
   only_ones_remain = false
@@ -353,7 +348,6 @@ def prev_permutations_count(base_ten_or_two_num, ones_count_goal)
 end
 
 def prev_permutations_count_broken_set(base_ten_num)
-
   dynamic_chunk = dynamic_chunk(base_ten_num)
   dynamic_slots_count = dynamic_chunk.length
   highest_possible_sq = is_perfect_square?(dynamic_slots_count + 1) ? dynamic_slots_count + 1 : prev_perfect_square(dynamic_slots_count + 1)
@@ -362,7 +356,7 @@ def prev_permutations_count_broken_set(base_ten_num)
   count = 0
 
   while current_sq
-    count += prev_permutations_count(base_ten_num, current_sq) # this might go lower that prev binary base
+    count += prev_permutations_count(base_ten_num, current_sq)
     current_sq = prev_perfect_square(current_sq)
   end
 
